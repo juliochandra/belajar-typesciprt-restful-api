@@ -8,9 +8,9 @@ import YAML from "yamljs";
  * @param app Express app instance
  */
 export function swaggerConfig(app: Express): void {
-	const swaggerDocument = YAML.load(
-		path.join(__dirname, "../docs/openapi.yml"),
-	);
+	const swaggerPath = path.resolve(process.cwd(), "docs/openapi.yml");
+
+	const swaggerDocument = YAML.load(swaggerPath);
 
 	app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
