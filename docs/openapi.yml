@@ -7,6 +7,8 @@ info:
 servers:
   - url: http://localhost:3000
     description: Local development server
+  - url: http://localhost:3001
+    description: Local development server
   - url: https://api.julio.my.id
     description: Production server
 
@@ -18,7 +20,7 @@ paths:
       summary: App endpoint
       description: Endpoint utama untuk memverifikasi bahwa server berjalan normal.
       responses:
-        '200':
+        "200":
           description: Server berjalan dengan normal dan mengembalikan pesan sambutan.
           content:
             application/json:
@@ -65,7 +67,7 @@ paths:
                   type: string
                   example: John Doe
       responses:
-        '201':
+        "201":
           description: Successful registration
           content:
             application/json:
@@ -102,12 +104,12 @@ paths:
                   success:
                     type: boolean
                     example: true
-        '409':
-          $ref: '#/components/responses/ConflictError'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "409":
+          $ref: "#/components/responses/ConflictError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /user/login:
     post:
@@ -134,7 +136,7 @@ paths:
                   minLength: 8
                   example: securePassword123
       responses:
-        '200':
+        "200":
           description: Successful login
           content:
             application/json:
@@ -146,19 +148,19 @@ paths:
                     properties:
                       token:
                         type: string
-                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...                    
+                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
                   message:
                     type: string
                     example: Login successful
                   success:
                     type: boolean
                     example: true
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /user/info:
     get:
@@ -167,7 +169,7 @@ paths:
       summary: Info user endpoint
       description: Mengembalikan informasi user yang sedang login berdasarkan token autentikasi.
       responses:
-        '200':
+        "200":
           description: Informasi user berhasil diambil
           content:
             application/json:
@@ -190,11 +192,10 @@ paths:
                       name:
                         type: string
                         example: John Doe
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
 components:
   responses:

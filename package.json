@@ -10,7 +10,7 @@
 		"dev": "dotenv -e .env.development tsx watch src/index.ts",
 		"test": "dotenv -e .env.test vitest",
 		"test:coverage": "dotenv -e .env.test vitest run --coverage",
-		"prestart": "tsc",
+		"build": "tsc",
 		"start": "node dist/index.js",
 		"lint": "biome check src",
 		"format": "biome check --write src"
