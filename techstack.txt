@@ -1,0 +1,17 @@
+Caddyserver
+Docker
+Express.js
+GitHub
+Next.js
+Node.js
+PostgreSQL
+Prisma ORM
+React
+Redux
+Swagger
+SOLID
+TypeScript
+Tailwind 
+Ubuntu
+Vitest
+

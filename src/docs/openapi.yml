@@ -1,0 +1,301 @@
+openapi: 3.0.3
+info:
+  title: Belajar RESTful API
+  version: 1.0.0
+  description: Dokumentasi API untuk latihan project Express + TypeScript
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+  - url: https://api.julio.my.id
+    description: Production server
+
+paths:
+  /:
+    get:
+      tags:
+        - App Endpoint
+      summary: App endpoint
+      description: Endpoint utama untuk memverifikasi bahwa server berjalan normal.
+      responses:
+        '200':
+          description: Server berjalan dengan normal dan mengembalikan pesan sambutan.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    nullable: true
+                    example: null
+                  message:
+                    type: string
+                    example: hello world sekai
+                  success:
+                    type: boolean
+                    example: true
+
+  /user:
+    post:
+      tags:
+        - Register
+      summary: Register endpoint
+      description: Endpoint untuk melakukan registrasi user baru
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - name
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  minLength: 8
+                  example: securePassword123
+                name:
+                  type: string
+                  example: John Doe
+      responses:
+        '201':
+          description: Successful registration
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: cmc1dlvs60000tay45s3o8dvl
+                          createdAt:
+                            type: string
+                            format: date-time
+                            example: 2025-06-18T03:12:00.295Z
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            example: 2025-06-18T03:12:00.295Z
+                          email:
+                            type: string
+                            format: email
+                            example: user@example.com
+                          name:
+                            type: string
+                            example: John Doe
+                  message:
+                    type: string
+                    example: Success register new user
+                  success:
+                    type: boolean
+                    example: true
+        '409':
+          $ref: '#/components/responses/ConflictError'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /user/login:
+    post:
+      tags:
+        - Auth
+      summary: Login endpoint
+      description: Endpoint untuk autentikasi user dan mendapatkan token akses.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  minLength: 8
+                  example: securePassword123
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...                    
+                  message:
+                    type: string
+                    example: Login successful
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /user/info:
+    get:
+      tags:
+        - Info
+      summary: Info user endpoint
+      description: Mengembalikan informasi user yang sedang login berdasarkan token autentikasi.
+      responses:
+        '200':
+          description: Informasi user berhasil diambil
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: cmc1dlvs60000tay45s3o8dvl
+                      email:
+                        type: string
+                        format: email
+                        example: user@example.com
+                      name:
+                        type: string
+                        example: John Doe
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  
+
+components:
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Bad Request
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Not Found
+
+    ConflictError:
+      description: Conflict error (e.g., Data already exists)
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Data already exists
+
+    Unauthorized:
+      description: Unauthorized request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Unauthorized
+
+    ValidationError:
+      description: Validation failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Validation failed
+
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Internal Server Error

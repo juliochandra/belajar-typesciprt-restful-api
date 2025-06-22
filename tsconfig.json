@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"module": "commonjs",
+		"rootDir": "src",
+		"outDir": "dist",
+		"strict": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"types": [
+			"vitest"
+		]
+	},
+	"include": [
+		"src",
+		"src/docs/swagger.yaml"
+	]
+}
